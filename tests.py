@@ -7,16 +7,14 @@ class TestBooksCollector:
 
       # проверяем ГЗ, что книги с ГЗ (1, 2, 39, 40 символов) в названии добавляются
     @pytest.mark.parametrize('book_name', ['К','К2','Параметризация упрощает написание теста','Параметризация упрощает написание теста!'])
-    def test_add_new_book_when_name_1_2_39_40_characters(self, book_name):
-        collector = BooksCollector()
-        collector.add_new_book(book_name)
-        assert len(collector.get_books_genre()) == 1
+    def test_add_new_book_when_name_1_2_39_40_characters(self, book_name,only_collector):
+        only_collector.add_new_book(book_name)
+        assert len(only_collector.get_books_genre()) == 1
 
       # проверяем ГЗ, что книга названием в 40 символов, добавляется
-    def test_add_new_book_when_name_than_40_characters(self):
-        collector = BooksCollector()
-        collector.add_new_book('Как начать писать автотесты для проверки')
-        assert len(collector.get_books_genre()) == 1
+    def test_add_new_book_when_name_than_40_characters(self,only_collector):
+        only_collector.add_new_book('Как начать писать автотесты для проверки')
+        assert len(only_collector.get_books_genre()) == 1
 
     # проверяем, что книга, которая уже есть в словаре не добавляется
     def test_not_add_new_book_when_book_is_in_the_dictionary(self, collector):
@@ -24,10 +22,9 @@ class TestBooksCollector:
         assert len(collector.get_books_genre()) == 1
 
     # проверяем, что книга названием более 40 символов, не добавляется
-    def test_not_add_new_book_when_name_more_than_40_characters(self):
-        collector = BooksCollector()
-        collector.add_new_book('Как начать писать автотесты для проверки?')
-        assert collector.get_books_genre() == {}
+    def test_not_add_new_book_when_name_more_than_40_characters(self,only_collector):
+        only_collector.add_new_book('Как начать писать автотесты для проверки?')
+        assert only_collector.get_books_genre() == {}
 
     # проверяем, что книга без названия не добавляется
     def test_not_add_new_book_without_a_name(self):
@@ -60,14 +57,13 @@ class TestBooksCollector:
         assert collector.get_book_genre(book_name) == 'Ужасы'
 
     # проверяем вывод списка книг по жанру
-    def test_get_book_with_scpecific_genre(self):
-        collector = BooksCollector()
+    def test_get_book_with_scpecific_genre(self,only_collector):
         new_books_genre = {'Фантастические твари':'Фантастика',
                            'Ужас ужасный': 'Ужасы',
                            'Ужас вчерашний': 'Ужасы',
                            'Фантасты тоже плачут': 'Фантастика'}
-        collector.books_genre.update(new_books_genre)
-        dict_genre = collector.get_books_with_specific_genre('Фантастика')
+        only_collector.books_genre.update(new_books_genre)
+        dict_genre = only_collector.get_books_with_specific_genre('Фантастика')
         assert dict_genre == ['Фантастические твари','Фантасты тоже плачут']
         # надо продумать негативные сценарии для списка
 
@@ -79,14 +75,13 @@ class TestBooksCollector:
         assert collector.get_books_genre() == {book_name:book_genre}
 
     # проверяем вывод книг подходящим детям
-    def test_get_books_for_children(self):
-        collector = BooksCollector()
+    def test_get_books_for_children(self,only_collector):
         new_books_genre = {'Фантастические твари':'Фантастика',
                            'Ужас ужасный': 'Ужасы',
                            'Ужас вчерашний': 'Ужасы',
                            'Фантасты тоже плачут': 'Фантастика'}
-        collector.books_genre.update(new_books_genre)
-        children_book = collector.get_books_for_children()
+        only_collector.books_genre.update(new_books_genre)
+        children_book = only_collector.get_books_for_children()
         assert children_book == ['Фантастические твари','Фантасты тоже плачут']
     # надо продумать негативные сценарии для списка
 
@@ -97,14 +92,13 @@ class TestBooksCollector:
         assert collector.favorites == ['Изучение Python за один день']
 
     # проверяем добавление нескольких книг в избранное
-    def test_add_three_book_in_favorites(self):
-        collector = BooksCollector()
+    def test_add_three_book_in_favorites(self,only_collector):
         books = ['Изучение Python за один день', 'Тестирование для тестировщика','Как разделить слона']
         dict_books = dict.fromkeys(books, 'Фантастика')
-        collector.books_genre.update(dict_books)
+        only_collector.books_genre.update(dict_books)
         for book in books:
-            collector.add_book_in_favorites(book)
-        assert collector.favorites == books
+            only_collector.add_book_in_favorites(book)
+        assert only_collector.favorites == books
 
     # проверяем что дубликат книги не добавляется в избранное
     def test_add_book_in_favorites(self,collector):
