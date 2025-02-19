@@ -1,23 +1,16 @@
+import pytest
 from main import BooksCollector
 
 # класс TestBooksCollector объединяет набор тестов, которыми мы покрываем наше приложение BooksCollector
 # обязательно указывать префикс Test
 class TestBooksCollector:
 
-    # проверка добавления новой кинги
-    def test_add_new_book(self):
+      # проверяем ГЗ, что книги с ГЗ (1, 2, 39, 40 символов) в названии добавляются
+    @pytest.mark.parametrize('book_name', ['К','К2','Параметризация упрощает написание теста','Параметризация упрощает написание теста!'])
+    def test_add_new_book_when_name_1_2_39_40_characters(self, book_name):
         collector = BooksCollector()
-        new_book ='Будни автотестировщика'
-        collector.add_new_book(new_book)
+        collector.add_new_book(book_name)
         assert len(collector.get_books_genre()) == 1
-
-    # проверка добавления двух книг
-    def test_add_new_book_add_two_books(self, collector):
-        # фикстура collector создаёт класс BooksCollector и добавляет 1 книгу 'Изучение Python за один день'
-        collector.add_new_book('Что делать, если ваш кот хочет вас убить')
-        # проверяем, что добавилось именно две
-        # словарь books_genre, который нам возвращает метод get_books_genre, имеет длину 2
-        assert len(collector.get_books_genre()) == 2
 
       # проверяем ГЗ, что книга названием в 40 символов, добавляется
     def test_add_new_book_when_name_than_40_characters(self):
@@ -35,7 +28,6 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Как начать писать автотесты для проверки?')
         assert len(collector.get_books_genre()) == 0
-
 
     # проверяем, что книга без названия не добавляется
     def test_not_add_new_book_without_a_name(self):
