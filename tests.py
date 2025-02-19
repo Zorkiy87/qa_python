@@ -27,13 +27,13 @@ class TestBooksCollector:
     def test_not_add_new_book_when_name_more_than_40_characters(self):
         collector = BooksCollector()
         collector.add_new_book('Как начать писать автотесты для проверки?')
-        assert len(collector.get_books_genre()) == 0
+        assert collector.get_books_genre() == {}
 
     # проверяем, что книга без названия не добавляется
     def test_not_add_new_book_without_a_name(self):
         collector = BooksCollector()
         collector.add_new_book('')
-        assert len(collector.get_books_genre()) == 0
+        assert collector.get_books_genre() == {}
 
     # проверяем, что добавляется жанр книги при наличии жанра и книги в списке
     def test_set_book_genre_with_name_and_genre_on_dict(self, collector):
@@ -68,8 +68,8 @@ class TestBooksCollector:
                            'Фантасты тоже плачут': 'Фантастика'}
         collector.books_genre.update(new_books_genre)
         dict_genre = collector.get_books_with_specific_genre('Фантастика')
-        assert len(dict_genre) == 2
-    # надо продумать негативные сценарии для списка
+        assert dict_genre == ['Фантастические твари','Фантасты тоже плачут']
+        # надо продумать негативные сценарии для списка
 
     # проверяем, получение словаря
     def test_get_books_genre(self, collector):
@@ -87,7 +87,7 @@ class TestBooksCollector:
                            'Фантасты тоже плачут': 'Фантастика'}
         collector.books_genre.update(new_books_genre)
         children_book = collector.get_books_for_children()
-        assert len(children_book) == 2
+        assert children_book == ['Фантастические твари','Фантасты тоже плачут']
     # надо продумать негативные сценарии для списка
 
     # проверяем добавление книг в избранное
