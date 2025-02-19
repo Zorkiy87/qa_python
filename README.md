@@ -2,14 +2,8 @@
 
 #по коду реализованы следующие проверки: 
 
-    # проверка добавления новой кинги
-    test_add_new_book(self):
-
-    # проверка добавления двух книг
-    test_add_new_book_add_two_books(self, collector):
-
-      # проверяем ГЗ, что книга названием в 40 символов, добавляется
-    test_add_new_book_when_name_than_40_characters(self):
+    # проверяем ГЗ, что книги с ГЗ (1, 2, 39, 40 символов) в названии добавляются
+    test_add_new_book_when_name_1_2_39_40_characters(self, book_name):
 
     # проверяем, что книга, которая уже есть в словаре не добавляется
     test_not_add_new_book_when_book_is_in_the_dictionary(self, collector):
