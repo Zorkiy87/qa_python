@@ -119,3 +119,5 @@ class TestBooksCollector:
         book_name = 'Изучение Python за один день'
         collector.add_book_in_favorites(book_name)
         assert collector.get_list_of_favorites_books() == ['Изучение Python за один день']
+
+#Круто! у меня получилось!
